@@ -72,7 +72,7 @@ $button-colors: (
     color: map-get($variant-config, text);
     padding: map-get($button-size, md);
     border: 1px solid transparent;
-    box-shadow: map-get($variant-config, box-shadow);
+    box-shadow: $box-shadow;
 
     &:hover,
     &:focus {
@@ -172,6 +172,9 @@ $button-colors: (
 button {
     @include button-style();
     @include button-default(default);
+}
+.btn-disable-box-shadow {
+    box-shadow: 0px 0px 0px !important;
 }
 
 @each $size, $value in $button-size {

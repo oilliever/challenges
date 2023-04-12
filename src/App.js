@@ -121,6 +121,12 @@ function App() {
                 text='Disabled text button'
                 disabled
             />
+            <Button
+                color='danger'
+                variant=''
+                text='Disable box shadow'
+                disableshadow
+            />
         </div>
     );
 }

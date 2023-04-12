@@ -7,7 +7,7 @@ const Button = ({
     size,
     onClick,
     disabled,
-    disablshadow,
+    disableshadow,
     startIcon,
     endIcon,
 }) => {
@@ -26,7 +26,9 @@ const Button = ({
     } else {
         buttonClassName = `${btnSize} ${btnVariant}`;
     }
-
+    if (disableshadow) {
+        buttonClassName += `btn-disable-box-shadow`;
+    }
     return (
         <button
             type='button'
@@ -35,7 +37,7 @@ const Button = ({
             size={size}
             onClick={onClick}
             disabled={disabled}
-            disablshadow={disablshadow}
+            disableshadow={disableshadow}
             className={buttonClassName}
         >
             {startIcon && (
