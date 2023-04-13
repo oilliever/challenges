@@ -1,131 +1,80 @@
 import './App.scss';
-import Button from './components/Button';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import Input from './components/Input';
+import LockIcon from '@mui/icons-material/Lock';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 
 function App() {
     return (
         <div className='container'>
-            <Button
-                color='default'
-                variant=''
-                text='Default default'
+            <Input
+                label='Label'
+                placeholder='Placeholder'
             />
-            <Button
-                color='default'
-                variant='outline'
-                text='Outline default'
+            <Input
+                label='Label'
+                placeholder='Placeholder'
+                error
             />
-            <Button
-                color='default'
-                variant='text'
-                text='Text default'
+            <Input
+                label='Label'
+                placeholder='Placeholder'
+                disabled
             />
-
-            <Button
-                color='primary'
-                variant=''
-                text='Default primary'
+            <Input
+                label='Label'
+                placeholder='Placeholder'
+                helperText='Some thing text'
             />
-            <Button
-                color='primary'
-                variant='outline'
-                text='Outline primary'
+            <Input
+                label='Label'
+                placeholder='Placeholder'
+                helperText='Some thing text'
+                error
             />
-            <Button
-                color='primary'
-                variant='text'
-                text='Text primary'
+            <div></div>
+            <Input
+                label='Label'
+                placeholder='Placeholder'
+                helperText='Some thing text'
+                startIcon={<LocalPhoneIcon />}
             />
-            <Button
-                color='secondary'
-                variant=''
-                text='Default secondary'
+            <Input
+                label='Label'
+                placeholder='Placeholder'
+                helperText='Some thing text'
+                endIcon={<LockIcon />}
             />
-            <Button
-                color='secondary'
-                variant='outline'
-                text='Outline secondary'
+            <Input
+                label='Label'
+                placeholder='Placeholder'
+                helperText='Some thing text'
+                value='Text'
             />
-            <Button
-                color='secondary'
-                variant='text'
-                text='Text secondary'
-            />
-            <Button
-                color='danger'
-                variant=''
-                text='Default danger'
-            />
-            <Button
-                color='danger'
-                variant='outline'
-                text='Outline danger'
-            />
-            <Button
-                color='danger'
-                variant='text'
-                text='Text danger'
-            />
-            <Button
-                color='danger'
-                variant='text'
-                text='With start icon'
-                startIcon={<AddShoppingCartIcon />}
-            />
-            <Button
-                color='danger'
-                variant='text'
-                text='With end icon'
-                endIcon={<AddShoppingCartIcon />}
-            />
-            <Button
-                color='danger'
-                variant='text'
-                text='With both'
-                startIcon={<AddShoppingCartIcon />}
-                endIcon={<AddShoppingCartIcon />}
-            />
-            <Button
-                color='danger'
-                variant=''
-                text='Small button'
+            <Input
+                label='Label'
+                placeholder='Placeholder'
+                helperText='Input size small'
                 size='sm'
             />
-            <Button
-                color='danger'
-                variant=''
-                text='Medium button'
+            <Input
+                label='Label'
+                placeholder='Placeholder'
+                helperText='Input size medium'
                 size='md'
             />
-            <Button
-                color='danger'
-                variant=''
-                text='Large button'
-                size='lg'
+            <div></div>
+            <Input
+                label='Label'
+                placeholder='Placeholder'
+                helperText='Full width input'
+                fullWidth
             />
-            <Button
-                color='danger'
-                variant=''
-                text='Disabled default button'
-                disabled
-            />
-            <Button
-                color='danger'
-                variant='outline'
-                text='Disabled outline button'
-                disabled
-            />
-            <Button
-                color='danger'
-                variant='text'
-                text='Disabled text button'
-                disabled
-            />
-            <Button
-                color='danger'
-                variant=''
-                text='Disable box shadow'
-                disableshadow
+            <Input
+                label='Label'
+                placeholder='Placeholder'
+                helperText='Multiline'
+                multiline
+                rows='5'
             />
         </div>
     );
