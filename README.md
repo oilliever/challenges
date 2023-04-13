@@ -1,7 +1,7 @@
 # ReactJs Challenges
 
 -   [x] [Challenge 1: Button Component](https://c1-vert.vercel.app)
--   [x] [Challenge 2: Input Component](https://cg2-vert.vercel.app)
+-   [x] [Challenge 2: Input Component](https://c2-vert.vercel.app)
 -   [ ] [Challenge 3: Todo App](https://c3-vert.vercel.app)
 -   [ ] [Challenge 4: Quote Generator App](https://c4-vert.vercel.app)
 -   [ ] [Challenge 5: Weather App](https://c5-vert.vercel.app)
