@@ -10,21 +10,28 @@ function App() {
     const [task, setTask] = useState('');
     const [tasks, setTasks] = useState(taskStorage || []);
 
+    const [noti, setNoti] = useState(false);
+
     var now = new Date();
     var uid = now.getTime();
 
     // action click on Add button
     const handleSubmit = () => {
-        setTasks((pre) => {
-            const newTasks = [
-                ...pre,
-                { id: uid, name: task, isChecked: false },
-            ];
-            // newTasks.sort((a, b) => (a.isChecked > b.isChecked ? 1 : -1));
-            localStorage.setItem('tasks', JSON.stringify(newTasks));
-            return newTasks;
-        });
-        setTask('');
+        if (task) {
+            setTasks((pre) => {
+                const newTasks = [
+                    ...pre,
+                    { id: uid, name: task, isChecked: false },
+                ];
+                // newTasks.sort((a, b) => (a.isChecked > b.isChecked ? 1 : -1));
+                localStorage.setItem('tasks', JSON.stringify(newTasks));
+                return newTasks;
+            });
+            setTask('');
+            setNoti(false);
+        } else {
+            setNoti(true);
+        }
     };
 
     // action when press enter in input
@@ -94,6 +101,11 @@ function App() {
                             className='btn-default-primary btn-lg'
                             onClick={handleSubmit}
                         />
+                        {noti && (
+                            <p style={{ color: 'red' }}>
+                                You have not entered the task!
+                            </p>
+                        )}
                     </div>
                     <div className='tab-content-body'>
                         {Object.keys(tasks)
@@ -126,6 +138,11 @@ function App() {
                             className='btn-default-primary btn-lg'
                             onClick={handleSubmit}
                         />
+                        {noti && (
+                            <p style={{ color: 'red' }}>
+                                You have not entered the task!
+                            </p>
+                        )}
                     </div>
                     <div className='tab-content-body'>
                         {Object.keys(tasks).map((key, index) => {
