@@ -1,132 +1,186 @@
 import './App.scss';
-import Button from './components/Button';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { StyledButton as Button } from './components/StyledButton';
+import { StyledTextInput, Task } from './components/StyledInput';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { Tabs } from './components/Tabs';
+import { useState } from 'react';
 
 function App() {
+    let taskStorage = JSON.parse(localStorage.getItem('tasks'));
+    const [task, setTask] = useState('');
+    const [tasks, setTasks] = useState(taskStorage || []);
+
+    var now = new Date();
+    var uid = now.getTime();
+
+    // action click on Add button
+    const handleSubmit = () => {
+        setTasks((pre) => {
+            const newTasks = [
+                ...pre,
+                { id: uid, name: task, isChecked: false },
+            ];
+            // newTasks.sort((a, b) => (a.isChecked > b.isChecked ? 1 : -1));
+            localStorage.setItem('tasks', JSON.stringify(newTasks));
+            return newTasks;
+        });
+        setTask('');
+    };
+
+    // action when press enter in input
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            handleSubmit();
+        }
+    };
+
+    // toggle task check - uncheck
+    const handleChangeTask = (index) => {
+        const newTasks = [...tasks];
+        newTasks[index].isChecked = !newTasks[index].isChecked;
+
+        newTasks.sort((a, b) => (a.isChecked > b.isChecked ? 1 : -1));
+        taskStorage[index] = {
+            id: taskStorage[index].id,
+            name: taskStorage[index].name,
+            isChecked: !taskStorage[index].isChecked,
+        };
+        localStorage.setItem('tasks', JSON.stringify(taskStorage));
+        setTasks(newTasks);
+    };
+
+    // delete task
+    const handelRemoveTask = (index) => {
+        const newTasks = [...tasks];
+        newTasks.splice(index, 1);
+
+        localStorage.setItem('tasks', JSON.stringify(newTasks));
+        setTasks(newTasks);
+    };
+
+    //#region filter and sort isChecked
+    const oldTasks = [...tasks];
+    const filtered = oldTasks.filter((obj) => {
+        return obj.isChecked === false;
+    });
+
+    const found = oldTasks.find((obj) => {
+        return obj.isChecked === true;
+    });
+    //#endregion
+
+    // delete all task is checked
+    const handleDeleteTasks = () => {
+        const newTasks = [...filtered];
+        localStorage.setItem('tasks', JSON.stringify(newTasks));
+        setTasks(newTasks);
+    };
+
     return (
         <div className='container'>
-            <Button
-                color='default'
-                variant=''
-                text='Default default'
-            />
-            <Button
-                color='default'
-                variant='outline'
-                text='Outline default'
-            />
-            <Button
-                color='default'
-                variant='text'
-                text='Text default'
-            />
-
-            <Button
-                color='primary'
-                variant=''
-                text='Default primary'
-            />
-            <Button
-                color='primary'
-                variant='outline'
-                text='Outline primary'
-            />
-            <Button
-                color='primary'
-                variant='text'
-                text='Text primary'
-            />
-            <Button
-                color='secondary'
-                variant=''
-                text='Default secondary'
-            />
-            <Button
-                color='secondary'
-                variant='outline'
-                text='Outline secondary'
-            />
-            <Button
-                color='secondary'
-                variant='text'
-                text='Text secondary'
-            />
-            <Button
-                color='danger'
-                variant=''
-                text='Default danger'
-            />
-            <Button
-                color='danger'
-                variant='outline'
-                text='Outline danger'
-            />
-            <Button
-                color='danger'
-                variant='text'
-                text='Text danger'
-            />
-            <Button
-                color='danger'
-                variant='text'
-                text='With start icon'
-                startIcon={<AddShoppingCartIcon />}
-            />
-            <Button
-                color='danger'
-                variant='text'
-                text='With end icon'
-                endIcon={<AddShoppingCartIcon />}
-            />
-            <Button
-                color='danger'
-                variant='text'
-                text='With both'
-                startIcon={<AddShoppingCartIcon />}
-                endIcon={<AddShoppingCartIcon />}
-            />
-            <Button
-                color='danger'
-                variant=''
-                text='Small button'
-                size='sm'
-            />
-            <Button
-                color='danger'
-                variant=''
-                text='Medium button'
-                size='md'
-            />
-            <Button
-                color='danger'
-                variant=''
-                text='Large button'
-                size='lg'
-            />
-            <Button
-                color='danger'
-                variant=''
-                text='Disabled default button'
-                disabled
-            />
-            <Button
-                color='danger'
-                variant='outline'
-                text='Disabled outline button'
-                disabled
-            />
-            <Button
-                color='danger'
-                variant='text'
-                text='Disabled text button'
-                disabled
-            />
-            <Button
-                color='danger'
-                variant=''
-                text='Disable box shadow'
-                disableshadow
-            />
+            <h1 style={{ paddingBottom: '60px' }}>#todo</h1>
+            <Tabs>
+                <div label='All'>
+                    <div className='tab-content-header'>
+                        <StyledTextInput
+                            value={task}
+                            type='text'
+                            placeholder='add details'
+                            onChange={(e) => setTask(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                        />
+                        <Button
+                            text='Add'
+                            className='btn-default-primary btn-lg'
+                            onClick={handleSubmit}
+                        />
+                    </div>
+                    <div className='tab-content-body'>
+                        {Object.keys(tasks)
+                            // .sort((a, b) =>
+                            //     a.isChecked > b.isChecked ? 1 : -1
+                            // )
+                            .map((key, index) => (
+                                <Task
+                                    key={tasks[key].id}
+                                    id={tasks[key].id}
+                                    label={tasks[key].name}
+                                    checked={tasks[key].isChecked}
+                                    onChange={() => handleChangeTask(index)}
+                                    onClick={() => handelRemoveTask(index)}
+                                />
+                            ))}
+                    </div>
+                </div>
+                <div label='Active'>
+                    <div className='tab-content-header'>
+                        <StyledTextInput
+                            value={task}
+                            type='text'
+                            placeholder='add details'
+                            onChange={(e) => setTask(e.target.value)}
+                            onKeyDown={handleKeyDown}
+                        />
+                        <Button
+                            text='Add'
+                            className='btn-default-primary btn-lg'
+                            onClick={handleSubmit}
+                        />
+                    </div>
+                    <div className='tab-content-body'>
+                        {Object.keys(tasks).map((key, index) => {
+                            if (!tasks[key].isChecked)
+                                return (
+                                    <Task
+                                        key={tasks[key].id}
+                                        id={tasks[key].id}
+                                        label={tasks[key].name}
+                                        checked={tasks[key].isChecked}
+                                        onChange={() => handleChangeTask(index)}
+                                        onClick={() => handelRemoveTask(index)}
+                                    />
+                                );
+                        })}
+                    </div>
+                </div>
+                <div label='Completed'>
+                    {found ? (
+                        <>
+                            <div className='tab-content-body'>
+                                {Object.keys(tasks).map((key, index) => {
+                                    if (tasks[key].isChecked)
+                                        return (
+                                            <Task
+                                                key={tasks[key].id}
+                                                id={tasks[key].id}
+                                                label={tasks[key].name}
+                                                checked={tasks[key].isChecked}
+                                                onChange={() =>
+                                                    handleChangeTask(index)
+                                                }
+                                                onClick={() =>
+                                                    handelRemoveTask(index)
+                                                }
+                                            />
+                                        );
+                                })}
+                            </div>
+                            <div className='tab-content-footer'>
+                                <Button
+                                    className='border-sm btn-default-danger'
+                                    icon={<DeleteOutlineIcon />}
+                                    text='delete all'
+                                    onClick={() => handleDeleteTasks()}
+                                />
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <p>No tasks completed yet!</p>
+                        </>
+                    )}
+                </div>
+            </Tabs>
         </div>
     );
 }
