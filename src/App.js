@@ -1,133 +1,96 @@
 import './App.scss';
-import Button from './components/Button';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { Button } from './components/Button';
+import { Quote } from './components/Quote';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import { useState, useEffect } from 'react';
 
 function App() {
-    return (
-        <div className='container'>
-            <Button
-                color='default'
-                variant=''
-                text='Default default'
-            />
-            <Button
-                color='default'
-                variant='outline'
-                text='Outline default'
-            />
-            <Button
-                color='default'
-                variant='text'
-                text='Text default'
-            />
+    const [quotes, setQuotes] = useState([]);
+    const [list, setList] = useState(true);
 
-            <Button
-                color='primary'
-                variant=''
-                text='Default primary'
-            />
-            <Button
-                color='primary'
-                variant='outline'
-                text='Outline primary'
-            />
-            <Button
-                color='primary'
-                variant='text'
-                text='Text primary'
-            />
-            <Button
-                color='secondary'
-                variant=''
-                text='Default secondary'
-            />
-            <Button
-                color='secondary'
-                variant='outline'
-                text='Outline secondary'
-            />
-            <Button
-                color='secondary'
-                variant='text'
-                text='Text secondary'
-            />
-            <Button
-                color='danger'
-                variant=''
-                text='Default danger'
-            />
-            <Button
-                color='danger'
-                variant='outline'
-                text='Outline danger'
-            />
-            <Button
-                color='danger'
-                variant='text'
-                text='Text danger'
-            />
-            <Button
-                color='danger'
-                variant='text'
-                text='With start icon'
-                startIcon={<AddShoppingCartIcon />}
-            />
-            <Button
-                color='danger'
-                variant='text'
-                text='With end icon'
-                endIcon={<AddShoppingCartIcon />}
-            />
-            <Button
-                color='danger'
-                variant='text'
-                text='With both'
-                startIcon={<AddShoppingCartIcon />}
-                endIcon={<AddShoppingCartIcon />}
-            />
-            <Button
-                color='danger'
-                variant=''
-                text='Small button'
-                size='sm'
-            />
-            <Button
-                color='danger'
-                variant=''
-                text='Medium button'
-                size='md'
-            />
-            <Button
-                color='danger'
-                variant=''
-                text='Large button'
-                size='lg'
-            />
-            <Button
-                color='danger'
-                variant=''
-                text='Disabled default button'
-                disabled
-            />
-            <Button
-                color='danger'
-                variant='outline'
-                text='Disabled outline button'
-                disabled
-            />
-            <Button
-                color='danger'
-                variant='text'
-                text='Disabled text button'
-                disabled
-            />
-            <Button
-                color='danger'
-                variant=''
-                text='Disable box shadow'
-                disableshadow
-            />
-        </div>
+    useEffect(() => {
+        if (quotes.length === 0 && !author)
+            fetch('https://quote-garden.onrender.com/api/v3/quotes/random')
+                .then((res) => res.json())
+                .then((json) => {
+                    setQuotes(json.data);
+                });
+    }, [quotes]);
+
+    const [author, setAuthor] = useState(null);
+
+    useEffect(() => {
+        if (author)
+            fetch(
+                'https://quote-garden.onrender.com/api/v3/quotes/?author=' +
+                    author
+            )
+                .then((res) => res.json())
+                .then((json) => {
+                    setQuotes(json.data);
+                });
+    }, [author]);
+
+    const handleRandom = () => {
+        setQuotes([]);
+        setAuthor(null);
+        setList(true);
+    };
+
+    return (
+        <>
+            <div className='header'>
+                <Button
+                    text='random'
+                    endIcon={<AutorenewIcon />}
+                    onClick={handleRandom}
+                />
+            </div>
+            <div className='card-quote'>
+                {author && (
+                    <div className='author-header'>
+                        <p>{author}</p>
+                    </div>
+                )}
+                <div className='card-body'>
+                    {quotes.map((item, index) => (
+                        <>
+                            <Quote
+                                key={index}
+                                text={item.quoteText}
+                            />
+
+                            {list && (
+                                <button
+                                    type='button'
+                                    className='btn-quote'
+                                    onClick={() => {
+                                        setQuotes([]);
+                                        setAuthor(item.quoteAuthor);
+                                        setList(false);
+                                    }}
+                                >
+                                    <div className='btn-group'>
+                                        <div className='desc-group'>
+                                            <span className='quote-author'>
+                                                {item.quoteAuthor}
+                                            </span>
+                                            <span className='quote-genre'>
+                                                {item.quoteGenre}
+                                            </span>
+                                        </div>
+                                        <div className='btn-icon'>
+                                            {<ArrowRightAltIcon />}
+                                        </div>
+                                    </div>
+                                </button>
+                            )}
+                        </>
+                    ))}
+                </div>
+            </div>
+        </>
     );
 }
 
