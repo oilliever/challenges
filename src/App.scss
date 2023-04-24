@@ -1,196 +1,109 @@
-$text-light: #ffffff;
-$text-dark: #3f3f3f;
+$gray-1: #e7e7eb;
+$gray-2: #a09fb1;
+$gray-3: #88869d;
+$gray-4: #616475;
+$gray-5: #6e707a;
 
-$box-shadow: 0px 2px 3px rgba(51, 51, 51, 0.2);
+$blue-1: #1e213a;
+$blue-2: #100e1d;
+$blue-3: #110e3c;
+$blue-4: #3c47e9;
 
-$button-size: (
-    sm: 6px 12px,
-    md: 8px 16px,
-    lg: 11px 22px,
-);
+$yellow-1: #ffec65;
 
-$disabled--bg-color: #e0e0e0;
-$disabled--text-color: #9e9e9e;
-
-$button-colors: (
-    default: (
-        text: $text-dark,
-        color-1: #e0e0e0,
-        color-2: #aeaeae,
-        color-3: rgba(249, 233, 233, 0.1),
-    ),
-    primary: (
-        text: $text-light,
-        color-1: #2962ff,
-        color-2: #0039cb,
-        color-3: rgba(41, 98, 255, 0.1),
-    ),
-    secondary: (
-        text: $text-light,
-        color-1: #455a64,
-        color-2: #1c313a,
-        color-3: rgba(94, 130, 142, 0.1),
-    ),
-    danger: (
-        text: $text-light,
-        color-1: #d32f2f,
-        color-2: #9a0007,
-        color-3: rgba(134, 0, 0, 0.1),
-    ),
-);
-
-.container {
-    text-align: center;
-    display: grid;
-    justify-items: center;
-    grid-template-columns: auto auto auto;
-    gap: 2rem;
-    padding: 5% 5%;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
 }
 
-@mixin disabled() {
-    cursor: not-allowed;
+.img-deco {
+    position: absolute;
+    opacity: 5%;
 }
 
-@mixin button-style() {
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    user-select: none;
-    text-decoration: none;
-    vertical-align: middle;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.img-deco-1 {
+    left: -89px;
+    top: 103px;
 }
 
-@mixin button-default($color) {
-    $variant-config: map-get($button-colors, $color);
+.img-deco-2 {
+    left: 336px;
+    top: 116px;
+}
 
-    background-color: map-get($variant-config, color-1);
-    color: map-get($variant-config, text);
-    padding: map-get($button-size, md);
+.img-deco-3 {
+    left: -111px;
+    top: 266px;
+}
+
+.img-deco-4 {
+    left: 323px;
+    top: 370px;
+}
+
+.btn-icon {
+    color: $gray-1;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border: 1px solid transparent;
-    box-shadow: $box-shadow;
-
-    &:hover,
-    &:focus {
-        background-color: map-get($variant-config, color-2);
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 9px;
+    > :only-child {
+        height: 22px;
+        width: 22px;
     }
-
-    &:disabled {
-        @include disabled();
-        background-color: $disabled--bg-color;
-        color: $disabled--text-color;
-    }
-}
-
-@each $color, $var in $button-colors {
-    .btn-default-#{$color} {
-        @include button-style();
-        @include button-default($color);
+    &:hover {
+        cursor: pointer;
     }
 }
 
-@mixin button-outline($color) {
-    $variant-config: map-get($button-colors, $color);
+.btn-primary {
+    border: 1px solid transparent;
+    background-color: $blue-4;
+    color: $gray-1;
+    padding: 14px 15px;
+    &:hover {
+        cursor: pointer;
+    }
+}
 
+.btn-text-icon {
     background-color: transparent;
-    padding: map-get($button-size, md);
-    box-shadow: 0px 0px 0px;
-
-    @if ($color==default) {
-        color: map-get($variant-config, text);
-        border: 1px solid map-get($variant-config, text);
-    } @else {
-        color: map-get($variant-config, color-1);
-        border: 1px solid map-get($variant-config, color-1);
+    border: 1px solid transparent;
+    color: $gray-1;
+    &:hover {
+        cursor: pointer;
+        color: red;
     }
+    &:hover {
+        cursor: pointer;
+    }
+}
 
-    &:hover,
-    &:focus {
-        @if ($color==default) {
-            background-color: map-get($variant-config, color-1);
-        } @else {
-            background-color: map-get($variant-config, color-3);
+.btn-text {
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: $gray-1;
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-between;
+    padding: 23px 12px;
+    > .end-icon {
+        display: none;
+    }
+    &:hover {
+        cursor: pointer;
+        border: 1px solid $gray-4;
+        > .end-icon {
+            display: inline-block;
         }
     }
-
-    &:disabled {
-        @include disabled();
-        background-color: transparent;
-        border: 1px solid $disabled--text-color;
-        color: $disabled--text-color;
-    }
-}
-
-@each $color, $var in $button-colors {
-    .btn-outline-#{$color} {
-        @include button-style();
-        @include button-outline($color);
-    }
-}
-
-@mixin button-text($color) {
-    $variant-config: map-get($button-colors, $color);
-
-    background-color: transparent;
-    padding: map-get($button-size, md);
-    border: 1px solid transparent;
-    box-shadow: 0px 0px 0px;
-
-    @if ($color==default) {
-        color: map-get($variant-config, text);
-    } @else {
-        color: map-get($variant-config, color-1);
-    }
-
-    &:hover,
-    &:focus {
-        @if ($color==default) {
-            background-color: map-get($variant-config, color-1);
-        } @else {
-            background-color: map-get($variant-config, color-3);
-        }
-    }
-
-    &:disabled {
-        @include disabled();
-        background-color: transparent;
-        color: $disabled--text-color;
-    }
-}
-
-@each $color, $var in $button-colors {
-    .btn-text-#{$color} {
-        @include button-style();
-        @include button-text($color);
-    }
-}
-
-button {
-    @include button-style();
-    @include button-default(default);
-}
-.btn-disable-box-shadow {
-    box-shadow: 0px 0px 0px !important;
-}
-
-@each $size, $value in $button-size {
-    .btn-#{$size} {
-        padding: $value !important;
-    }
-}
-.start-icon {
-    padding-right: 0.4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.start-icon > :only-child {
-    width: 1rem;
-    height: 1rem;
 }
 
 .end-icon > :only-child {
@@ -199,8 +112,297 @@ button {
 }
 
 .end-icon {
-    padding-left: 0.4rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 1rem;
+    height: 1rem;
+}
+
+.input-group {
+    display: inline-flex;
+    flex-direction: column-reverse;
+    align-items: start;
+    justify-content: center;
+    position: relative;
+    > .start-icon {
+        display: none;
+        color: $gray-4;
+    }
+    > input {
+        border: 1px solid transparent;
+        padding: 14px 18px;
+        background-color: $gray-5;
+        color: $gray-1;
+        width: auto;
+        height: 100%;
+        font-size: 1rem;
+        &::placeholder {
+            color: $gray-1;
+        }
+        &:focus {
+            color: $gray-1;
+            padding-left: 55px !important;
+            width: 100%;
+            padding-right: 12px;
+            &::placeholder {
+                color: $gray-4;
+            }
+            background-color: transparent;
+            border: 1px solid $gray-1;
+            outline: none !important;
+            ~ .start-icon {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                padding-left: 15px;
+            }
+        }
+    }
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    .sidebar {
+        background-color: $blue-1;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        align-items: flex-end;
+        flex: 1 1 auto;
+        padding: 0px 46px;
+        max-width: 450px;
+        min-height: 672px;
+        padding-top: 42px;
+        > .sidebar-group {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 42px 0px;
+        }
+        > .sidebar-content {
+            width: 100%;
+            > .sidebar-img {
+                margin-bottom: 87px;
+                margin-top: 109px;
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+            > .sidebar-info {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                width: 100%;
+                > .info-temp {
+                    font-size: 144px;
+                    color: $gray-1;
+                    margin-bottom: 87px;
+                    &::after {
+                        content: attr(units);
+                        font-size: 48px;
+                        font-weight: 100;
+                        color: $gray-2;
+                    }
+                }
+                > .info-text {
+                    font-size: 36px;
+                    color: $gray-2;
+                    margin-bottom: 87px;
+                }
+                > .info-date {
+                    font-size: 18px;
+                    margin-bottom: 32px;
+                    color: $gray-3;
+                }
+                > .info-location {
+                    font-size: 18px;
+                    color: $gray-3;
+                    margin-bottom: 52px;
+                    display: inline-flex;
+                    align-items: center;
+                }
+            }
+        }
+        > .sidebar-close {
+            position: absolute;
+            display: flex;
+            justify-content: end;
+            padding: 19px 0px;
+        }
+        > .sidebar-search {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding-bottom: 58px;
+        }
+        > .search-content {
+            width: 100%;
+        }
+    }
+
+    > .weather-container {
+        background-color: $blue-2;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        flex: 8 1;
+        padding-bottom: 155px;
+        > .temp-group {
+            display: flex;
+            justify-content: end;
+            padding: 42px 125px;
+            gap: 12px;
+            > .btn-active {
+                color: $blue-3;
+                background-color: $gray-1;
+            }
+        }
+        > .week-weather {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 24px;
+            padding: 0px 123px;
+            padding-bottom: 72px;
+            > .weather-card {
+                height: 177px;
+                flex: 0 2 120px;
+                background-color: $blue-1;
+                display: inline-grid;
+                justify-items: center;
+                padding: 18px 0px;
+                > .weather-card-date {
+                    color: $gray-1;
+                }
+                > .weather-card-img {
+                    max-height: 62px;
+                }
+                > .weather-card-temp {
+                    > span:nth-child(1) {
+                        color: $gray-1;
+                        margin-right: 16px;
+                        &::after {
+                            content: attr(units);
+                        }
+                    }
+                    > span:nth-child(2) {
+                        color: $gray-2;
+                        &::after {
+                            content: attr(units);
+                        }
+                    }
+                }
+            }
+        }
+        > .weather-info {
+            display: flex;
+            flex-direction: column;
+            padding: 0px 123px;
+            > .info-title {
+                font-size: 24px;
+                font-weight: 700;
+                padding-bottom: 32px;
+                display: flex;
+                justify-items: end;
+                color: $gray-1;
+            }
+            > .info-group {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 32px;
+                color: $gray-1;
+                > .weather-info-card {
+                    flex: 0 1 328px;
+                    display: inline-grid;
+                    justify-items: center;
+                    background-color: $blue-1;
+                    padding: 22px 0 37px 0;
+                    > p:nth-child(1) {
+                        margin-bottom: 6px;
+                    }
+                    > p:nth-child(2) {
+                        font-size: 64px;
+                        font-weight: 700;
+                        &::after {
+                            content: attr(data-desc);
+                            font-size: 36px;
+                            font-weight: 500;
+                            margin-left: 1rem;
+                        }
+                    }
+                    > .info-card-footer {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 5.71px;
+                        margin-top: 18px;
+                        > .humidity-progress {
+                            display: inline-flex;
+                            flex-direction: column;
+                            > .humidity-number {
+                                display: inline-flex;
+                                color: $gray-1;
+                                font-size: 12px;
+                                font-weight: 700;
+                                justify-content: space-between;
+                                align-items: center;
+                                padding-bottom: 2px;
+                            }
+                            > .humidity-percen {
+                                display: inline-flex;
+                                color: $gray-1;
+                                font-size: 12px;
+                                font-weight: 700;
+                                justify-content: end;
+                                align-items: center;
+                                padding-top: 2px;
+                            }
+                            > progress {
+                                height: 8px;
+                                -webkit-appearance: none;
+                            }
+                            ::-webkit-progress-bar {
+                                background-color: $gray-1;
+                                border-radius: 80px;
+                            }
+                            ::-webkit-progress-value {
+                                border-radius: 80px;
+                                background-color: $yellow-1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 415px) {
+    .sidebar {
+        padding: 18px 11px !important;
+    }
+    .sidebar-header {
+        padding: 0px !important;
+    }
+    .week-weather {
+        padding: 52px 55px !important;
+        justify-content: space-between !important;
+    }
+    .weather-info {
+        padding: 0px 23px !important;
+        .info-group {
+            justify-content: center !important;
+        }
+    }
+    .temp-group {
+        display: none !important;
+    }
 }
