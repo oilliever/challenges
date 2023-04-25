@@ -52,6 +52,7 @@ function App() {
             .then((req) => {
                 setData(req);
             });
+        console.log(API_URL);
     }, [API_URL]);
 
     const handleFindCity = () => {
@@ -88,7 +89,6 @@ function App() {
         let day = days[a.getDay()];
         let month = months[a.getMonth()];
         return day + ', ' + date + ' ' + month;
-        // return day + ', ' + date + ' ' + month;
     };
 
     const setCurrentLocation = () => {
@@ -261,7 +261,7 @@ function App() {
                                 units={units === 'imperial' ? '°F' : '°C'}
                             />
                             <WeatherCard
-                                date={turnToDate(data.list[37].dt_txt)}
+                                date={turnToDate(data.list[39].dt_txt)}
                                 src={`https://openweathermap.org/img/wn/${data.list[39].weather[0].icon}@2x.png`}
                                 imgAlt='Iso Rain Day'
                                 tempLow={Math.round(
