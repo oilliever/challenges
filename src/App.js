@@ -52,7 +52,6 @@ function App() {
             .then((req) => {
                 setData(req);
             });
-        console.log(API_URL);
     }, [API_URL]);
 
     const handleFindCity = () => {
