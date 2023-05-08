@@ -12,30 +12,37 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useEffect, useState } from 'react';
 
 function App() {
-    const [isCurr, setIsCurr] = useState(true);
+    const [isCurr, setIsCurr] = useState();
     const [showMenu, setShowMenu] = useState(false);
     const [city, setCity] = useState('');
     const [units, setUnits] = useState('metric');
-    const [find, setFind] = useState([]);
+    const [find, setFind] = useState('Tokyo');
     const [data, setData] = useState('');
     const [list, setList] = useState([]);
 
     const [lat, setLat] = useState();
     const [lon, setLon] = useState();
 
-    useEffect(() => {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            setLat(position.coords.latitude);
-            setLon(position.coords.longitude);
-        });
-    }, []);
+    let API_URL = `https://api.openweathermap.org/data/2.5/forecast?appid=5caf59265a678ca70e57d4763ad8ddcc&q=${find}&units=${units}`;
 
-    let API_URL = '';
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                setLat(position.coords.latitude);
+                setLon(position.coords.longitude);
+                setIsCurr(true);
+            },
+            function (error) {
+                if (error.code == error.PERMISSION_DENIED) {
+                    setIsCurr(false);
+                    setFind('Tokyo');
+                }
+            }
+        );
+    }, []);
 
     if (isCurr) {
         API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=5caf59265a678ca70e57d4763ad8ddcc&q&units=${units}`;
-    } else {
-        API_URL = `https://api.openweathermap.org/data/2.5/forecast?appid=5caf59265a678ca70e57d4763ad8ddcc&q=${find}&units=${units}`;
     }
 
     useEffect(() => {
