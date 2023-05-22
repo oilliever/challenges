@@ -1,6 +1,4 @@
-import { useState } from 'react';
-
-const Button = ({
+export const Button = ({
     text,
     variant,
     color,
@@ -40,12 +38,9 @@ const Button = ({
             disableshadow={disableshadow}
             className={buttonClassName}
         >
-            {startIcon && (
-                <startIcon className='start-icon'>{startIcon}</startIcon>
-            )}
+            {startIcon && <span className='start-icon'>{startIcon}</span>}
             {text}
-            {endIcon && <startIcon className='end-icon'>{endIcon}</startIcon>}
+            {endIcon && <span className='end-icon'>{endIcon}</span>}
         </button>
     );
 };
-export default Button;
