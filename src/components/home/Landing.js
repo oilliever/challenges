@@ -2,9 +2,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import TrendingFlatIcon from '@mui/icons-material/TrendingFlat';
 import { useFetch } from '../../hooks/useFetch';
 import { Button } from '../Button';
-import { ImageCard } from '../ImageCard';
 import { Logo } from '../Logo';
 import { SearchBar } from '../SearchBar';
+import { Other } from '../other/Other';
 
 export const Landing = () => {
     const { isLoading, serverError, apiData } = useFetch(
@@ -29,10 +29,8 @@ export const Landing = () => {
                     text='see more'
                     endIcon={<TrendingFlatIcon />}
                 />
-                <ImageCard title='Bengal' />
-                <ImageCard title='Bengal' />
-                <ImageCard title='Bengal' />
-                <ImageCard title='Bengal' />
+
+                <Other />
             </div>
         </div>
     );

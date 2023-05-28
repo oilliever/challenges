@@ -12,7 +12,7 @@ export const useFetch = (url) => {
             try {
                 const resp = await axios.get(url);
                 const data = await resp?.data;
-                setApiData(Object.assign(data));
+                setApiData(data);
                 setIsLoading(false);
             } catch (error) {
                 setServerError(error);

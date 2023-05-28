@@ -8,10 +8,16 @@ export const InfoIndex = () => {
     const { id } = useParams();
     const { apiData } = useFetch(`https://api.thecatapi.com/v1/breeds/${id}`);
     return (
-        <div style={{ marginTop: '40px' }}>
-            <Main data={apiData} />
-            <Lib />
-            <Footer />
-        </div>
+        <>
+            {!apiData ? (
+                <span>Loading.....</span>
+            ) : (
+                <div style={{ marginTop: '40px' }}>
+                    <Main data={apiData} />
+                    <Lib />
+                    <Footer />
+                </div>
+            )}
+        </>
     );
 };
