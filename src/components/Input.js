@@ -16,13 +16,14 @@ export const TextInputGroup = ({
         </div>
     );
 };
-export const TextInput = ({ label, placeholder, startIcon }) => {
+export const TextInput = ({ label, placeholder, startIcon, onChange }) => {
     return (
         <div className='input-group'>
             <label>{label}</label>
             <div className='input'>
                 <div className='start-icon'>{startIcon}</div>
                 <input
+                    onChange={onChange}
                     type='text'
                     placeholder={placeholder}
                 />

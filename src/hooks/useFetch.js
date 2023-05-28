@@ -1,46 +1,52 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 
-export const GetData = (page) => {
-    // const [data, setData] = useState([]);
-
-    // let API_URL = `https://www.themuse.com/api/public/jobs?page=${page}`;
-
-    // useEffect(() => {
-    //     const FetchData = async () => {
-    //         try {
-    //             const req = await fetch(API_URL);
-    //             const res = await req.json();
-    //             setData(res.results);
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     };
-    //     FetchData();
-    // }, []);
-
-    // return data;
-    const [data, setData] = useState();
-
-    const { id } = useParams();
+export const useFetch = (url) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [apiData, setApiData] = useState(null);
+    const [serverError, setServerError] = useState(null);
 
     useEffect(() => {
-        fetch(`https://www.themuse.com/api/public/jobs?page=${id}`)
-            .then((res) => res.json())
-            .then((data) => setData(data));
-    }, [id]);
-    return data;
+        setIsLoading(true);
+        const fetchData = async () => {
+            try {
+                const resp = await axios.get(url);
+                const data = await resp?.data;
+                setApiData(data.results);
+                setIsLoading(false);
+            } catch (error) {
+                setServerError(error);
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [url]);
+
+    return { isLoading, apiData, serverError };
 };
 
-export const GetDetails = () => {
-    const [data, setData] = useState();
-
-    const { id } = useParams();
+export const useFetchForDetail = (url) => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [apiData, setApiData] = useState(null);
+    const [serverError, setServerError] = useState(null);
 
     useEffect(() => {
-        fetch(`https://www.themuse.com/api/public/jobs/${id}`)
-            .then((res) => res.json())
-            .then((data) => setData(data));
-    }, [id]);
-    return data;
+        setIsLoading(true);
+        const fetchData = async () => {
+            try {
+                const resp = await axios.get(url);
+                const data = await resp?.data;
+                setApiData(data);
+                setIsLoading(false);
+            } catch (error) {
+                setServerError(error);
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [url]);
+
+    return { isLoading, apiData, serverError };
 };
