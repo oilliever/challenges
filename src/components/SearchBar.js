@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export const SearchBar = ({ endIcon, placeholder, data }) => {
     const [filteredData, setFilteredData] = useState([]);
@@ -8,7 +9,7 @@ export const SearchBar = ({ endIcon, placeholder, data }) => {
         const searchWord = event.target.value;
         setWordEntered(searchWord);
         const newFilter = data.filter((value) => {
-            return value.title.toLowerCase().includes(searchWord.toLowerCase());
+            return value.name.toLowerCase().includes(searchWord.toLowerCase());
         });
 
         if (searchWord === '') {
@@ -29,18 +30,17 @@ export const SearchBar = ({ endIcon, placeholder, data }) => {
                 />
                 {endIcon && <span className='end-icon'>{endIcon}</span>}
             </div>
-            {filteredData.length != 0 && (
+            {filteredData.length !== 0 && (
                 <div className='dataResult'>
                     {filteredData.slice(0, 15).map((value, key) => {
                         return (
-                            <a
+                            <Link
+                                key={value.id}
                                 className='dataItem'
-                                href={value.link}
-                                target='_blank'
-                                rel='noreferrer'
+                                to={value.id}
                             >
-                                <p>{value.title} </p>
-                            </a>
+                                <p>{value.name} </p>
+                            </Link>
                         );
                     })}
                 </div>
