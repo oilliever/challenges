@@ -1,7 +1,7 @@
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import LockIcon from '@mui/icons-material/Lock';
 import './App.scss';
 import Input from './components/Input';
-import LockIcon from '@mui/icons-material/Lock';
-import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 
 function App() {
     return (
