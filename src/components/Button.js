@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 const Button = ({
     text,
     variant,
@@ -15,20 +13,22 @@ const Button = ({
 
     const btnVariant = variant ? `btn-${variant}` : '';
     const btnColor = color ? `btn-${color}` : '';
-    let buttonClassName = '';
+    let buttonClassName = `${btnSize} `;
 
     if (color) {
         if (variant) {
-            buttonClassName = `btn-${variant}-${color} ${btnSize}`;
+            buttonClassName += `btn-${variant}-${color}`;
         } else {
-            buttonClassName = `btn-default-${color} ${btnSize}`;
+            buttonClassName += `btn-default-${color}`;
         }
     } else {
-        buttonClassName = `${btnSize} ${btnVariant}`;
+        buttonClassName += `${btnVariant}`;
     }
+
     if (disableshadow) {
         buttonClassName += `btn-disable-box-shadow`;
     }
+
     return (
         <button
             type='button'
@@ -40,11 +40,9 @@ const Button = ({
             disableshadow={disableshadow}
             className={buttonClassName}
         >
-            {startIcon && (
-                <startIcon className='start-icon'>{startIcon}</startIcon>
-            )}
+            {startIcon && <span className='start-icon'>{startIcon}</span>}
             {text}
-            {endIcon && <startIcon className='end-icon'>{endIcon}</startIcon>}
+            {endIcon && <span className='end-icon'>{endIcon}</span>}
         </button>
     );
 };
